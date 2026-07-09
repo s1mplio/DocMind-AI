@@ -14,14 +14,10 @@ embedding_model=HuggingFaceEmbeddings(model_name=EmbeddingModel)
 
 #load FAISS index
 
-vector_store=FAISS.load_local(VECTOR_DB_PATH,
-                              embedding_model,
-                              allow_dangerous_deserialization=True
-                              )
 
 #create retriever 
 
-retriever=vector_store.as_retriever(search_kwargs={"k":3})
+
 
 #load qwen
 
@@ -42,6 +38,11 @@ Answer:
 """)
 
 def ask(question):
+    vector_store=FAISS.load_local(VECTOR_DB_PATH,
+                              embedding_model,
+                              allow_dangerous_deserialization=True
+                              )
+    retriever=vector_store.as_retriever(search_kwargs={"k":3})
     docs=retriever.invoke(question)
     context="\n\n".join([doc.page_content for doc in docs])
     chain=prompt | llm
