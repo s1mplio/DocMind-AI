@@ -2,10 +2,11 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 import os
-
+load_dotenv()
 EmbeddingModel="sentence-transformers/all-MiniLM-L6-v2"
 VECTOR_DB_PATH="vectorstore"
 
@@ -45,12 +46,12 @@ def ask(question):
     retriever=vector_store.as_retriever(search_kwargs={"k":3})
     docs=retriever.invoke(question)
     context="\n\n".join([doc.page_content for doc in docs])
-    chain=prompt | llm
+    chain=prompt | llm  | StrOutputParser()
     response=chain.invoke({
         "context":context,
         "question":question
     })
-    return response.content
+    return response
 
 if __name__=="__main__":
     while True:
