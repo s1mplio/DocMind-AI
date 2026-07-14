@@ -1,5 +1,5 @@
 import warnings
-
+from dotenv import load_dotenv
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
