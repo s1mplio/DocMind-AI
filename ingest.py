@@ -8,6 +8,9 @@ from langchain_community.vectorstores import FAISS
 import os
 
 
+load_dotenv()
+
+token=os.getenv("HF_TOKEN")
 
 VECTOR_STORE_PATH="vectorstore"
 
@@ -24,7 +27,7 @@ def split_documents(documents):
 
 
 def create_vector_store(chunks):
-    embeddings_huggingface=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings_huggingface=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",token=token)
     vector_store=FAISS.from_documents(documents=chunks,embedding=embeddings_huggingface)
     os.makedirs(VECTOR_STORE_PATH,exist_ok=True)
     vector_store.save_local(VECTOR_STORE_PATH)

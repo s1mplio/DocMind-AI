@@ -9,9 +9,10 @@ import os
 load_dotenv()
 EmbeddingModel="sentence-transformers/all-MiniLM-L6-v2"
 VECTOR_DB_PATH="vectorstore"
+token=os.getenv("HF_TOKEN")
 
 #load embedding model
-embedding_model=HuggingFaceEmbeddings(model_name=EmbeddingModel)
+embedding_model=HuggingFaceEmbeddings(model_name=EmbeddingModel, token=token)
 
 #load FAISS index
 
