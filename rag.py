@@ -12,7 +12,7 @@ VECTOR_DB_PATH="vectorstore"
 token=os.getenv("HF_TOKEN")
 
 #load embedding model
-embedding_model=HuggingFaceEmbeddings(model_name=EmbeddingModel, token=token)
+embedding_model=HuggingFaceEmbeddings(model_name=EmbeddingModel)
 
 #load FAISS index
 
